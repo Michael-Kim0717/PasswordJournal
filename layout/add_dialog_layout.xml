@@ -4,46 +4,53 @@
 
     <EditText
         android:id="@+id/accountField"
-        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="21dp"
         android:ems="10"
+        android:fontFamily="monospace"
         android:hint="Account Name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/usernameField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_alignLeft="@+id/accountField"
         android:layout_alignStart="@+id/accountField"
         android:layout_below="@+id/accountField"
+        android:layout_marginTop="10dp"
         android:ems="10"
+        android:fontFamily="monospace"
         android:hint="Username"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/passwordField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_alignLeft="@+id/usernameField"
         android:layout_alignStart="@+id/usernameField"
         android:layout_below="@+id/usernameField"
+        android:layout_marginTop="11dp"
         android:ems="10"
+        android:fontFamily="monospace"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textAlignment="center" />
 
     <Button
-        android:id="@+id/addAccountButton"
-        android:layout_width="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:background="#54FF9F"
+        android:id="@+id/saveButton"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/passwordField"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:text="Add" />
+        android:layout_marginTop="11dp"
+        android:text="Save" />
 </RelativeLayout>

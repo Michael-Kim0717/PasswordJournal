@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/pinLayout">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/linearLayout"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <EditText
+            android:id="@+id/pinNum1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:layout_alignBaseline="@+id/pinNum2"
+            android:layout_alignBottom="@+id/pinNum2"
+            android:layout_alignEnd="@+id/pinNum2"
+            android:layout_alignRight="@+id/pinNum2"
+            android:layout_weight="0.25"
+            android:ems="10"
+            android:inputType="numberPassword"
+            android:maxLength="1" />
+
+        <EditText
+            android:id="@+id/pinNum2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="0.25"
+            android:clickable="false"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/pinNum3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignBaseline="@+id/pinNum2"
+            android:layout_alignBottom="@+id/pinNum2"
+            android:layout_toEndOf="@+id/pinNum2"
+            android:layout_toRightOf="@+id/pinNum2"
+            android:layout_weight="0.25"
+            android:clickable="false"
+            android:ems="10"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:inputType="numberPassword"
+            android:maxLength="1" />
+
+        <EditText
+            android:id="@+id/pinNum4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:layout_alignBaseline="@+id/pinNum3"
+            android:layout_alignBottom="@+id/pinNum3"
+            android:layout_toEndOf="@+id/pinNum3"
+            android:layout_toRightOf="@+id/pinNum3"
+            android:layout_weight="0.25"
+            android:clickable="false"
+            android:ems="10"
+            android:inputType="numberPassword"
+            android:maxLength="1" />
+    </LinearLayout>
+
+</RelativeLayout>
