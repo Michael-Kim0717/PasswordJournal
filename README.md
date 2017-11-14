@@ -15,4 +15,4 @@ Features:
 
   From the settings screen, be able to set and edit your PIN number.
   
-  ![alt text](C:\Users\Michael Kim\Documents\PasswordJournal\SettingsPIN.png)
+  ![pin](https://user-images.githubusercontent.com/8729300/32809425-c9da5e72-c964-11e7-8cc8-c4e614a16155.png)
