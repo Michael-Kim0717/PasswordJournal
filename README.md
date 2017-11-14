@@ -9,7 +9,7 @@ Features:
   
   ![alt text](C:\Users\Michael Kim\Documents\PasswordJournal\HomeScreen.png)
   
-  ![alt text](C:\Users\Michael Kim\Documents\PasswordJournal\AccountDetails.png)
+  ![details](https://user-images.githubusercontent.com/8729300/32809364-939f6d48-c964-11e7-93be-4e2ef4c8ada7.png)
   
 - Settings Screen
 
