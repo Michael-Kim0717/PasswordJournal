@@ -14,6 +14,13 @@ public class account {
         this.password = p;
     }
 
+    public static abstract class accountDBManager {
+        public static final String ACCOUNT_NAME = "account";
+        public static final String USER_NAME = "username";
+        public static final String PASSWORD = "password";
+        public static final String TABLE_NAME = "table_info";
+    }
+
     public String getAccount() {
         return account;
     }
