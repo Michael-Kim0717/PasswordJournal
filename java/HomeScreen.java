@@ -82,7 +82,6 @@ public class HomeScreen extends AppCompatActivity {
                 SharedPreferences sharedPreferences = getSharedPreferences("PINNUM", Context.MODE_PRIVATE);
 
                 pinNumber = sharedPreferences.getInt("PIN", 0);
-                Toast.makeText(getBaseContext(), Integer.toString(pinNumber), Toast.LENGTH_SHORT).show();
 
                 // If the user has no pin entered,
                 // Display the selected account information.
@@ -187,16 +186,14 @@ public class HomeScreen extends AppCompatActivity {
                         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                             if (pin4.getText().toString().length() == 1){
                                 int pinValue = Integer.parseInt(pin1.getText().toString() + pin2.getText().toString() + pin3.getText().toString() + pin4.getText().toString());
-                                Toast.makeText(getBaseContext(), Integer.toString(pinValue), Toast.LENGTH_SHORT).show();
 
                                 if (pinValue == pinNumber){
                                     showDetails(listViewPosition);
-                                    Toast.makeText(getBaseContext(), "OKAY", Toast.LENGTH_SHORT).show();
                                     enterPinDialog.dismiss();
                                 }
                                 else {
                                     enterPinDialog.dismiss();
-                                    Toast.makeText(getBaseContext(), "NOT OKAY", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getBaseContext(), "INVALID PIN.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -293,7 +290,7 @@ public class HomeScreen extends AppCompatActivity {
                         listAdapter.notifyDataSetChanged();
                         editDialog.dismiss();
 
-                        Toast.makeText(getBaseContext(), "Account Edited", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "ACCOUNT UPDATED.", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 });
@@ -312,7 +309,7 @@ public class HomeScreen extends AppCompatActivity {
                 listAdapter.notifyDataSetChanged();
                 dialog.dismiss();
 
-                Toast.makeText(getBaseContext(), "Account Deleted.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "ACCOUNT DELETED.", Toast.LENGTH_SHORT).show();
             }
         });
 

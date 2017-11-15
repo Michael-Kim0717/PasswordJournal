@@ -181,7 +181,7 @@ public class SettingsScreen extends AppCompatActivity {
                                         setPin(pinValues);
                                     }
                                     else{
-                                        Toast.makeText(getBaseContext(), "PIN is incorrect.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getBaseContext(), "INVALID PIN.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
@@ -192,7 +192,6 @@ public class SettingsScreen extends AppCompatActivity {
                             }
                         });
                     }
-                    Toast.makeText(getBaseContext(), Integer.toString(pinNumber), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -407,7 +406,7 @@ public class SettingsScreen extends AppCompatActivity {
                     if (pinValues[1] != pinValues[0]){
                         // If the confirmed PIN is different from the original entered PIN,
                         // Dismiss and the user must try again.
-                        Toast.makeText(getBaseContext(), "PIN DOES NOT MATCH", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "INVALID PIN, TRY AGAIN.", Toast.LENGTH_SHORT).show();
                         enterPinDialog.dismiss();
                     }
                     else{
@@ -422,7 +421,7 @@ public class SettingsScreen extends AppCompatActivity {
                         editor.putInt("PIN", pinValues[1]);
                         editor.apply();
 
-                        Toast.makeText(getBaseContext(), "PIN UPDATED", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "PIN UPDATED.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
