@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Created by Michael Kim on 11/13/2017.
@@ -25,14 +24,12 @@ public class accountDB extends SQLiteOpenHelper{
     // Database Constructor.
     public accountDB(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.e("DB", "Database Created/Opened");
     }
 
     // Create the table.
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_QUERY);
-        Log.e("DB", "Table Created.");
     }
 
     // Method to add the information into the database.
@@ -44,9 +41,6 @@ public class accountDB extends SQLiteOpenHelper{
         contentValues.put(account.accountDBManager.PASSWORD, password);
 
         db.insert(account.accountDBManager.TABLE_NAME, null, contentValues);
-
-        Log.e("DB", "Account added.");
-
     }
 
     // Method to receive information from the database.
@@ -77,7 +71,7 @@ public class accountDB extends SQLiteOpenHelper{
         contentValues.put(account.accountDBManager.ACCOUNT_NAME, newAccount);
         contentValues.put(account.accountDBManager.USER_NAME, newUsername);
         contentValues.put(account.accountDBManager.PASSWORD, newPassword);
-        String selection = account.accountDBManager.USER_NAME + " LIKE ?";
+        String selection = account.accountDBManager.ACCOUNT_NAME + " LIKE ?";
         String[] selection_args = {oldAccount};
         int count = sqLiteDatabase.update(account.accountDBManager.TABLE_NAME, contentValues, selection, selection_args);
         return count;

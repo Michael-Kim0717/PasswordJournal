@@ -5,19 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -58,11 +55,6 @@ public class HomeScreen extends AppCompatActivity {
 
         context = getApplicationContext();
 
-        // Create an adapter that fills the listview with just the account names.
-        passwordList = (ListView) findViewById(R.id.passwordList);
-        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, accountValues);
-        passwordList.setAdapter(listAdapter);
-
         // For showing the information within a listview.
         accountDB = new accountDB(context);
         sqLiteDatabase = accountDB.getReadableDatabase();
@@ -75,6 +67,15 @@ public class HomeScreen extends AppCompatActivity {
             }
             while (cursor.moveToNext());
         }
+        sqLiteDatabase.close();
+
+        // Create an adapter that fills the listview with just the account names.
+        // Done specifically after the account retrieval so that sorting may be processed.
+        passwordList = (ListView) findViewById(R.id.passwordList);
+        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, accountValues);
+        Collections.sort(accounts);
+        Collections.sort(accountValues);
+        passwordList.setAdapter(listAdapter);
 
         passwordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -102,6 +103,11 @@ public class HomeScreen extends AppCompatActivity {
                     enterPin.setView(pinDialog).setTitle("Enter Your PIN.");
                     final AlertDialog enterPinDialog = enterPin.show();
 
+                    if (pin1.requestFocus()){
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                    }
+
                     // Whenever a number is entered into the EditText fields, proceed onto the next EditText field.
                     // When the last field is reached, check if the pin number matches and then show details.
                     pin1.addTextChangedListener(new TextWatcher() {
@@ -119,7 +125,7 @@ public class HomeScreen extends AppCompatActivity {
                                         pin2.requestFocus();
                                     }
                                 }
-                            },100);
+                            },0);
                         }
 
                         @Override
@@ -143,7 +149,7 @@ public class HomeScreen extends AppCompatActivity {
                                         pin3.requestFocus();
                                     }
                                 }
-                            },100);
+                            },0);
                         }
 
                         @Override
@@ -167,7 +173,7 @@ public class HomeScreen extends AppCompatActivity {
                                         pin4.requestFocus();
                                     }
                                 }
-                            },100);
+                            },0);
                         }
 
                         @Override
@@ -193,7 +199,7 @@ public class HomeScreen extends AppCompatActivity {
                                 }
                                 else {
                                     enterPinDialog.dismiss();
-                                    Toast.makeText(getBaseContext(), "INVALID PIN.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getBaseContext(), "Invalid PIN.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -277,7 +283,9 @@ public class HomeScreen extends AppCompatActivity {
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        sqLiteDatabase = accountDB.getWritableDatabase();
                         accountDB.updateAccount(accounts.get(position).account, accountField.getText().toString(), usernameField.getText().toString(), passwordField.getText().toString(), sqLiteDatabase);
+                        sqLiteDatabase.close();
 
                         accounts.get(position).account = accountField.getText().toString();
                         accounts.get(position).username = usernameField.getText().toString();
@@ -285,13 +293,13 @@ public class HomeScreen extends AppCompatActivity {
 
                         accountValues.set(position, accountField.getText().toString());
 
-                        sqLiteDatabase = accountDB.getWritableDatabase();
+                        Collections.sort(accounts);
+                        Collections.sort(accountValues);
 
                         listAdapter.notifyDataSetChanged();
                         editDialog.dismiss();
 
-                        Toast.makeText(getBaseContext(), "ACCOUNT UPDATED.", Toast.LENGTH_SHORT).show();
-                        finish();
+                        Toast.makeText(getBaseContext(), "Account Updated.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -301,7 +309,9 @@ public class HomeScreen extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sqLiteDatabase = accountDB.getWritableDatabase();
                 accountDB.deleteAccount(accounts.get(position).account, sqLiteDatabase);
+                sqLiteDatabase.close();
 
                 accounts.remove(position);
                 accountValues.remove(position);
@@ -309,7 +319,7 @@ public class HomeScreen extends AppCompatActivity {
                 listAdapter.notifyDataSetChanged();
                 dialog.dismiss();
 
-                Toast.makeText(getBaseContext(), "ACCOUNT DELETED.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Account Deleted.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -324,35 +334,40 @@ public class HomeScreen extends AppCompatActivity {
         final EditText passwordField = (EditText) dialogView.findViewById(R.id.passwordField);
         final Button saveButton = (Button) dialogView.findViewById(R.id.saveButton);
 
+        add.setView(dialogView);
+        final AlertDialog dialog = add.create();
+        dialog.show();
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // If any of the fields are not entered, throw an error.
                 if(accountField.getText().toString().equals("") || usernameField.getText().toString().equals("") || passwordField.getText().toString().equals("")){
-                    Toast.makeText(getBaseContext(), "Please Enter in All Fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Please Enter in All Fields.", Toast.LENGTH_SHORT).show();
                 }
                 // If the account already exists in the field, throw an error.
                 else if (accountValues.contains(accountField.getText().toString())){
-                    Toast.makeText(getBaseContext(), "Account Already Exists", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Account Already Exists.", Toast.LENGTH_SHORT).show();
                 }
                 // If all is satisfied, save the account.
                 else{
                     accountValues.add(accountField.getText().toString());
                     accounts.add(new account(accountField.getText().toString(), usernameField.getText().toString(), passwordField.getText().toString()));
 
+                    Collections.sort(accountValues);
+                    Collections.sort(accounts);
+
                     sqLiteDatabase = accountDB.getWritableDatabase();
                     accountDB.addAccount(accountField.getText().toString(), usernameField.getText().toString(), passwordField.getText().toString(), sqLiteDatabase);
                     listAdapter.notifyDataSetChanged();
 
-                    Toast.makeText(getBaseContext(), "Account Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Account Saved.", Toast.LENGTH_SHORT).show();
 
                     accountDB.close();
                 }
+                // Close popup after addition.
+                dialog.dismiss();
             }
         });
-
-        add.setView(dialogView);
-        AlertDialog dialog = add.create();
-        dialog.show();
     }
 }

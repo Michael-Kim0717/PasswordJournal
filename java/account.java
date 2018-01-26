@@ -4,7 +4,7 @@ package com.projects.michaelkim.passwordjournal;
  * Created by Michael Kim on 11/8/2017.
  */
 
-public class account {
+public class account implements Comparable<account> {
 
     String account, username, password;
 
@@ -19,6 +19,13 @@ public class account {
         public static final String USER_NAME = "username";
         public static final String PASSWORD = "password";
         public static final String TABLE_NAME = "table_info";
+    }
+
+    @Override
+    public int compareTo(account account){
+        int compare = this.account.compareTo(account.account);
+
+        return compare;
     }
 
     public String getAccount() {

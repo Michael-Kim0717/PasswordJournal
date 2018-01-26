@@ -1,7 +1,6 @@
 package com.projects.michaelkim.passwordjournal;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,12 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -93,6 +91,11 @@ public class SettingsScreen extends AppCompatActivity {
                         enterPin.setView(pinDialog).setTitle("Enter your PIN");
                         enterPinDialog = enterPin.show();
 
+                        if (pin1.requestFocus()){
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        }
+
                         // Whenever a number is entered into the EditText fields, proceed onto the next EditText field.
                         // When the last field is reached, check if the entered PIN matches the user's PIN.
                         pin1.addTextChangedListener(new TextWatcher() {
@@ -110,7 +113,7 @@ public class SettingsScreen extends AppCompatActivity {
                                             pin2.requestFocus();
                                         }
                                     }
-                                },100);
+                                },0);
                             }
 
                             @Override
@@ -133,7 +136,7 @@ public class SettingsScreen extends AppCompatActivity {
                                             pin3.requestFocus();
                                         }
                                     }
-                                },100);
+                                },0);
                             }
 
                             @Override
@@ -156,7 +159,7 @@ public class SettingsScreen extends AppCompatActivity {
                                             pin4.requestFocus();
                                         }
                                     }
-                                },100);
+                                },0);
                             }
 
                             @Override
@@ -181,7 +184,7 @@ public class SettingsScreen extends AppCompatActivity {
                                         setPin(pinValues);
                                     }
                                     else{
-                                        Toast.makeText(getBaseContext(), "INVALID PIN.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getBaseContext(), "Invalid PIN.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
@@ -228,7 +231,7 @@ public class SettingsScreen extends AppCompatActivity {
                             pin2.requestFocus();
                         }
                     }
-                },100);
+                },0);
             }
 
             @Override
@@ -251,7 +254,7 @@ public class SettingsScreen extends AppCompatActivity {
                             pin3.requestFocus();
                         }
                     }
-                },100);
+                },0);
             }
 
             @Override
@@ -274,7 +277,7 @@ public class SettingsScreen extends AppCompatActivity {
                             pin4.requestFocus();
                         }
                     }
-                },100);
+                },0);
             }
 
             @Override
@@ -338,7 +341,7 @@ public class SettingsScreen extends AppCompatActivity {
                             pin2.requestFocus();
                         }
                     }
-                },100);
+                },0);
             }
 
             @Override
@@ -361,7 +364,7 @@ public class SettingsScreen extends AppCompatActivity {
                             pin3.requestFocus();
                         }
                     }
-                },100);
+                },0);
             }
 
             @Override
@@ -384,7 +387,7 @@ public class SettingsScreen extends AppCompatActivity {
                             pin4.requestFocus();
                         }
                     }
-                },100);
+                },0);
             }
 
             @Override
@@ -406,7 +409,7 @@ public class SettingsScreen extends AppCompatActivity {
                     if (pinValues[1] != pinValues[0]){
                         // If the confirmed PIN is different from the original entered PIN,
                         // Dismiss and the user must try again.
-                        Toast.makeText(getBaseContext(), "INVALID PIN, TRY AGAIN.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Invalid PIN, Try Again.", Toast.LENGTH_SHORT).show();
                         enterPinDialog.dismiss();
                     }
                     else{
@@ -421,7 +424,7 @@ public class SettingsScreen extends AppCompatActivity {
                         editor.putInt("PIN", pinValues[1]);
                         editor.apply();
 
-                        Toast.makeText(getBaseContext(), "PIN UPDATED.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Pin Updated.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
