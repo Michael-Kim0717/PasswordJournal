@@ -10,9 +10,11 @@ A simple application to keep and hold all your account information with easy acc
 
 ```
   
-  Langauges :
+  Languages :
   
   Java
+  Android Studio
+  SQLite
   
 ```
 
